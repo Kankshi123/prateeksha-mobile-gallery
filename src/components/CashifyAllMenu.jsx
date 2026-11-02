@@ -18,6 +18,7 @@ import {
   Camera,
   ShieldCheck,
   CheckCircle2,
+  X,
 } from "lucide-react";
 import { buildWhatsAppUrl } from "../data/shop";
 
@@ -385,22 +386,27 @@ export default function CashifyAllMenu() {
       {/* "All ▾" Trigger Button matching Cashify */}
       <button
         type="button"
+        className="all-menu-trigger-btn"
         onClick={() => setIsOpen((prev) => !prev)}
-        onMouseEnter={() => setIsOpen(true)}
+        onMouseEnter={() => {
+          if (typeof window !== "undefined" && window.innerWidth >= 768) {
+            setIsOpen(true);
+          }
+        }}
         aria-expanded={isOpen}
         aria-haspopup="true"
         style={{
           display: "inline-flex",
           alignItems: "center",
           gap: "0.35rem",
-          padding: "0.55rem 0.95rem",
+          padding: "0.52rem 0.85rem",
           borderRadius: "var(--radius-sm)",
           backgroundColor: isOpen ? "var(--primary)" : "#FAF5E8",
           color: isOpen ? "var(--accent)" : "var(--ink)",
           border: "1.5px solid",
           borderColor: isOpen ? "var(--primary)" : "var(--line)",
           fontFamily: "var(--font-sans)",
-          fontSize: "0.92rem",
+          fontSize: "0.9rem",
           fontWeight: 700,
           cursor: "pointer",
           transition: "all 0.2s ease",
@@ -409,7 +415,7 @@ export default function CashifyAllMenu() {
       >
         <span>All</span>
         <ChevronDown
-          size={16}
+          size={15}
           strokeWidth={2}
           style={{
             transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
@@ -422,6 +428,7 @@ export default function CashifyAllMenu() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            className="cashify-all-dropdown"
             initial={{ opacity: 0, y: 8, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.98 }}
@@ -443,6 +450,7 @@ export default function CashifyAllMenu() {
           >
             {/* Tier 1: Left Categories List (Width: 230px) */}
             <div
+              className="cashify-all-left-col"
               style={{
                 width: "230px",
                 backgroundColor: "#FAF5E8",
@@ -451,6 +459,7 @@ export default function CashifyAllMenu() {
                 display: "flex",
                 flexDirection: "column",
                 flexShrink: 0,
+                overflowY: "auto",
               }}
             >
               <div
@@ -477,11 +486,22 @@ export default function CashifyAllMenu() {
                   <button
                     key={cat.id}
                     type="button"
+                    className="cashify-all-cat-btn"
                     onMouseEnter={() => {
-                      setActiveCategoryIndex(idx);
-                      setActiveSubIndex(0);
+                      if (typeof window !== "undefined" && window.innerWidth >= 768) {
+                        setActiveCategoryIndex(idx);
+                        setActiveSubIndex(0);
+                      }
                     }}
-                    onClick={() => handleNavigate(cat.mainRoute)}
+                    onClick={(e) => {
+                      if (activeCategoryIndex !== idx) {
+                        e.preventDefault();
+                        setActiveCategoryIndex(idx);
+                        setActiveSubIndex(0);
+                      } else {
+                        handleNavigate(cat.mainRoute);
+                      }
+                    }}
                     style={{
                       display: "flex",
                       alignItems: "center",
@@ -500,9 +520,9 @@ export default function CashifyAllMenu() {
                       transition: "background-color 0.15s ease",
                     }}
                   >
-                    <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                       <Icon size={15} color={isSelected ? "var(--primary)" : "var(--muted)"} strokeWidth={1.5} />
-                      <span>{cat.label}</span>
+                      <span style={{ fontSize: "0.85rem" }}>{cat.label}</span>
                     </div>
                     <ChevronRight size={14} color={isSelected ? "var(--primary)" : "#A0AEC0"} />
                   </button>
@@ -512,6 +532,7 @@ export default function CashifyAllMenu() {
 
             {/* Tier 2: Right Detail Panel (Width: 330px) */}
             <div
+              className="cashify-all-right-panel"
               style={{
                 flex: 1,
                 padding: "1.25rem 1.4rem",
@@ -524,7 +545,7 @@ export default function CashifyAllMenu() {
               }}
             >
               <div>
-                {/* Category Header */}
+                {/* Category Header with Close button */}
                 <div
                   style={{
                     display: "flex",
@@ -558,22 +579,44 @@ export default function CashifyAllMenu() {
                     </span>
                   </div>
 
-                  <button
-                    type="button"
-                    onClick={() => handleNavigate(currentCategory.mainRoute)}
-                    style={{
-                      fontFamily: "var(--font-mono)",
-                      fontSize: "0.75rem",
-                      color: "var(--primary)",
-                      fontWeight: 700,
-                      background: "none",
-                      border: "none",
-                      cursor: "pointer",
-                      textDecoration: "underline",
-                    }}
-                  >
-                    View All →
-                  </button>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                    <button
+                      type="button"
+                      onClick={() => handleNavigate(currentCategory.mainRoute)}
+                      style={{
+                        fontFamily: "var(--font-mono)",
+                        fontSize: "0.75rem",
+                        color: "var(--primary)",
+                        fontWeight: 700,
+                        background: "none",
+                        border: "none",
+                        cursor: "pointer",
+                        textDecoration: "underline",
+                      }}
+                    >
+                      View All →
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setIsOpen(false)}
+                      aria-label="Close menu"
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        width: "26px",
+                        height: "26px",
+                        borderRadius: "50%",
+                        backgroundColor: "rgba(0,0,0,0.06)",
+                        border: "none",
+                        color: "var(--ink)",
+                        cursor: "pointer",
+                        marginLeft: "0.3rem",
+                      }}
+                    >
+                      <X size={15} />
+                    </button>
+                  </div>
                 </div>
 
                 {/* Sub-Items Tabs / Pills if multiple */}
@@ -748,6 +791,38 @@ export default function CashifyAllMenu() {
           color: var(--primary) !important;
           font-weight: 700 !important;
           padding-left: 4px !important;
+        }
+        @media (max-width: 768px) {
+          .all-menu-trigger-btn {
+            padding: 0.42rem 0.65rem !important;
+            font-size: 0.84rem !important;
+            gap: 0.2rem !important;
+          }
+          .cashify-all-dropdown {
+            position: fixed !important;
+            top: 74px !important;
+            left: 8px !important;
+            right: 8px !important;
+            width: auto !important;
+            max-width: calc(100vw - 16px) !important;
+            max-height: calc(85vh - 74px) !important;
+            box-shadow: 0 16px 40px rgba(16, 41, 43, 0.3) !important;
+            border-radius: 12px !important;
+          }
+          .cashify-all-left-col {
+            width: 135px !important;
+            padding: 0.4rem 0 !important;
+          }
+          .cashify-all-cat-btn {
+            padding: 0.5rem 0.6rem !important;
+          }
+          .cashify-all-cat-btn span {
+            font-size: 0.78rem !important;
+            line-height: 1.2 !important;
+          }
+          .cashify-all-right-panel {
+            padding: 0.85rem 0.95rem !important;
+          }
         }
       `}</style>
     </div>

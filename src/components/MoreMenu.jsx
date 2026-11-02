@@ -58,6 +58,7 @@ export default function MoreMenu() {
       {/* More Button */}
       <button
         type="button"
+        className="more-menu-trigger-btn"
         onClick={() => setIsOpen((prev) => !prev)}
         aria-expanded={isOpen}
         aria-haspopup="true"
@@ -101,6 +102,7 @@ export default function MoreMenu() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            className="more-menu-dropdown-panel"
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 6 }}
@@ -172,6 +174,23 @@ export default function MoreMenu() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <style>{`
+        @media (max-width: 640px) {
+          .more-menu-trigger-btn {
+            padding: 0.42rem 0.6rem !important;
+            font-size: 0.84rem !important;
+            gap: 0.2rem !important;
+          }
+          .more-menu-dropdown-panel {
+            right: -20px !important;
+            width: 240px !important;
+            max-width: 88vw !important;
+            max-height: calc(85vh - 74px) !important;
+            overflow-y: auto !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

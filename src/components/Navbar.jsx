@@ -45,35 +45,38 @@ export default function Navbar() {
           gap: "1rem",
         }}
       >
-        {/* Brand Logo generated bespoke for Prateeksha Mobile Gallery */}
-        <Link
-          to="/"
-          style={{
-            textDecoration: "none",
-            display: "inline-flex",
-            alignItems: "center",
-            flexShrink: 0,
-          }}
-          aria-label="Prateeksha Mobile Gallery Home"
-        >
-          <Logo size={44} showText={true} />
-        </Link>
+        {/* Left Section: Brand Logo + 'All ▾' Menu */}
+        <div style={{ display: "flex", alignItems: "center", gap: "0.55rem", flexShrink: 0 }}>
+          <Link
+            to="/"
+            style={{
+              textDecoration: "none",
+              display: "inline-flex",
+              alignItems: "center",
+              flexShrink: 0,
+            }}
+            aria-label="Prateeksha Mobile Gallery Home"
+          >
+            <Logo size={42} showText={true} />
+          </Link>
 
-        {/* Central Hub: Cashify-Style 'All ▾' Mega Menu + Search Bar */}
+          {/* Cashify 2-Tier 'All ▾' Mega Menu Dropdown (Visible on Both Mobile & Laptop) */}
+          <div className="nav-all-menu-wrap">
+            <CashifyAllMenu />
+          </div>
+        </div>
+
+        {/* Central Hub: Search Bar (Desktop only) */}
         <div
-          className="desktop-nav-wrap"
+          className="desktop-search-wrap"
           style={{
             display: "none",
             alignItems: "center",
-            gap: "0.85rem",
             flex: 1,
-            maxWidth: "620px",
-            margin: "0 0.5rem",
+            maxWidth: "520px",
+            margin: "0 0.75rem",
           }}
         >
-          {/* Cashify 2-Tier 'All ▾' Mega Menu Dropdown */}
-          <CashifyAllMenu />
-
           {/* Interactive Search Bar matching Cashify Header */}
           <form
             onSubmit={handleSearch}
@@ -126,15 +129,16 @@ export default function Navbar() {
         </div>
 
         {/* Right Actions: More Menu + Wishlist + Cart + WhatsApp CTA + Mobile Menu Button */}
-        <div style={{ display: "flex", alignItems: "center", gap: "0.65rem", flexShrink: 0 }}>
-          {/* More Menu Dropdown (Cashify Style) */}
-          <div className="hide-mobile">
+        <div style={{ display: "flex", alignItems: "center", gap: "0.45rem", flexShrink: 0 }}>
+          {/* More Menu Dropdown (Cashify Style - Visible on Both Mobile & Laptop) */}
+          <div className="nav-more-menu-wrap">
             <MoreMenu />
           </div>
 
           {/* Small Wishlist Option in Navbar */}
           <button
             type="button"
+            className="nav-icon-btn"
             onClick={() => setIsWishlistOpen(true)}
             aria-label={`Wishlist (${wishlistCount})`}
             title="My Wishlist"
@@ -191,6 +195,7 @@ export default function Navbar() {
           {/* Small Cart Option in Navbar */}
           <button
             type="button"
+            className="nav-icon-btn"
             onClick={() => setIsCartOpen(true)}
             aria-label={`Shopping Cart (${cartCount})`}
             title="Shopping Cart"
@@ -268,25 +273,35 @@ export default function Navbar() {
             aria-label="Open navigation menu"
             aria-expanded={menuOpen}
             style={{
-              padding: "0.5rem 0.65rem",
+              padding: "0.45rem 0.55rem",
               display: "inline-flex",
             }}
           >
-            <Menu size={20} strokeWidth={1.5} />
+            <Menu size={18} strokeWidth={1.5} />
           </button>
         </div>
       </div>
 
       <style>{`
         @media (min-width: 900px) {
-          .desktop-nav-wrap { display: flex !important; }
+          .desktop-search-wrap { display: flex !important; }
           .mobile-menu-btn { display: none !important; }
+        }
+        @media (max-width: 899px) {
+          .desktop-search-wrap { display: none !important; }
         }
         @media (max-width: 640px) {
           .hide-mobile { display: none !important; }
+          .nav-whatsapp-cta { display: none !important; }
+          .nav-icon-btn {
+            width: 34px !important;
+            height: 34px !important;
+          }
         }
         @media (max-width: 440px) {
-          .nav-whatsapp-cta { display: none !important; }
+          .mobile-menu-btn {
+            padding: 0.38rem 0.45rem !important;
+          }
         }
       `}</style>
 
