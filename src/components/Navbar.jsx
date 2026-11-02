@@ -249,22 +249,6 @@ export default function Navbar() {
             )}
           </button>
 
-          {/* WhatsApp Button */}
-          <a
-            href={buildWhatsAppUrl("Hello Prateeksha Mobile Gallery, I would like to inquire about products and services.")}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-whatsapp nav-whatsapp-cta"
-            style={{
-              padding: "0.55rem 1.15rem",
-              fontSize: "0.88rem",
-            }}
-            id="nav-whatsapp-btn"
-          >
-            <MessageCircle size={16} strokeWidth={1.5} />
-            <span className="hide-mobile">WhatsApp Us</span>
-          </a>
-
           {/* Mobile Menu Button */}
           <button
             type="button"
@@ -292,7 +276,6 @@ export default function Navbar() {
         }
         @media (max-width: 640px) {
           .hide-mobile { display: none !important; }
-          .nav-whatsapp-cta { display: none !important; }
           .nav-icon-btn {
             width: 34px !important;
             height: 34px !important;
