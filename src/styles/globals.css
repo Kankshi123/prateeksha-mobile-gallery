@@ -1,0 +1,548 @@
+/* ============================================================
+   PRATEEKSHA MOBILE GALLERY – "Butter & Teal" Design System
+   Art-directed, hand-crafted local brand styling
+   ============================================================ */
+
+:root {
+  /* Core Palette */
+  --bg: #FBF6E9;          /* butter cream, page background */
+  --surface: #FFFDF6;     /* slightly lighter cream for cards */
+  --primary: #0E5A5A;     /* deep teal: buttons, heading accents, footer, dark sections */
+  --primary-hover: #084040;
+  --accent: #FFD84D;      /* butter yellow: highlights, underlines, stickers, hover states */
+  --pop: #E4572E;         /* tomato red: ONLY for small offer tags, "LIVE" badges, discount stamps, countdown dot */
+  --ink: #10292B;         /* all body text and headings */
+  --muted: #5B6F70;
+  --line: #E5DCC3;        /* borders/dividers */
+
+  /* Typography */
+  --font-serif: "Fraunces", Georgia, serif;
+  --font-sans: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "DM Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Tactile Printed Offset Shadows */
+  --shadow-sm: 2px 2px 0 var(--primary);
+  --shadow-md: 4px 4px 0 var(--primary);
+  --shadow-lg: 6px 6px 0 var(--primary);
+  --shadow-accent: 3px 3px 0 var(--accent);
+  --shadow-line: 3px 3px 0 var(--line);
+
+  /* Corner Radius: 8-12px, restrained */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  /* Safe Area Insets for iOS & Android gesture bars */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+}
+
+/* ─── Reset & Base ──────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  position: relative;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Images & Media responsive safety */
+img, picture, video, canvas, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Prevent iOS Safari from automatically zooming in on form focus */
+@media (max-width: 768px) {
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* ─── Subtle Paper-Grain Texture (3.5% opacity) ─────────────── */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ─── Skip Link for A11y ────────────────────────────────────── */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--primary);
+  color: var(--bg);
+  padding: 0.5rem 1rem;
+  z-index: 10000;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  text-decoration: none;
+  border-radius: 0 0 var(--radius-sm) 0;
+}
+.skip-link:focus {
+  left: 0;
+}
+
+/* ─── Typography Defaults ───────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--ink);
+}
+
+p {
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Eyebrow Label in DM Mono */
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.eyebrow-on-dark {
+  color: var(--accent);
+}
+
+/* Hand-drawn style yellow underline under one key word */
+.underline-hand {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.underline-hand::after {
+  content: "";
+  position: absolute;
+  left: -2px;
+  right: -2px;
+  bottom: 2px;
+  height: 9px;
+  background-color: var(--accent);
+  z-index: -1;
+  transform: rotate(-1.2deg);
+  border-radius: 4px;
+}
+
+/* ─── Buttons with Tactile Offset Shadow ─────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.35rem;
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--primary);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  text-decoration: none;
+  user-select: none;
+}
+
+/* Primary Button: Deep Teal background with cream text & yellow hover */
+.btn-primary {
+  background-color: var(--primary);
+  color: var(--bg);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.btn-primary:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--ink);
+  color: var(--accent);
+}
+.btn-primary:active {
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+/* Outline / Secondary Button: Cream background with teal text */
+.btn-secondary {
+  background-color: var(--surface);
+  color: var(--primary);
+  box-shadow: 3px 3px 0 var(--primary);
+}
+.btn-secondary:hover {
+  background-color: #FAF4E2;
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--primary);
+}
+.btn-secondary:active {
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 var(--primary);
+}
+
+/* WhatsApp Button: Deep Teal with small WhatsApp icon */
+.btn-whatsapp {
+  background-color: var(--primary);
+  color: var(--accent);
+  border: 1.5px solid var(--primary);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.btn-whatsapp:hover {
+  background-color: var(--primary-hover);
+  color: #FFF;
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+.btn-whatsapp:active {
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+/* Accent Button: Butter Yellow with ink text */
+.btn-accent {
+  background-color: var(--accent);
+  color: var(--ink);
+  border: 1.5px solid var(--primary);
+  box-shadow: 3px 3px 0 var(--primary);
+}
+.btn-accent:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--primary);
+}
+.btn-accent:active {
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 var(--primary);
+}
+
+/* ─── Cards & Containers ────────────────────────────────────── */
+.card-tactile {
+  background-color: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.card-tactile:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ─── Rotated Yellow Sticker / Stamp ────────────────────────── */
+.stamp-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--accent);
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
+  box-shadow: 2.5px 2.5px 0 var(--primary);
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.sticker-circle {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background-color: var(--accent);
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  box-shadow: 3px 3px 0 var(--primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-transform: uppercase;
+  transform: rotate(-7deg);
+}
+
+/* Tomato Red Rare Offer Stamp */
+.stamp-tomato {
+  display: inline-block;
+  background-color: var(--pop);
+  color: #FFFFFF;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 2px 2px 0 var(--ink);
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* Pulsing Tomato Dot for LIVE */
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--pop);
+  display: inline-block;
+  animation: pulse-live 1.8s infinite ease-in-out;
+}
+
+@keyframes pulse-live {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.35); opacity: 0.65; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ─── Ticket-Style Card with Notched Edges ──────────────────── */
+.ticket-card {
+  position: relative;
+  background-color: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.ticket-divider {
+  border-top: 1.5px dashed var(--line);
+  margin: 0.85rem 0;
+}
+
+/* ─── Arch Frame for Hero Device ────────────────────────────── */
+.arch-frame {
+  border-radius: 120px 120px var(--radius-md) var(--radius-md);
+  background-color: var(--primary);
+  border: 2px solid var(--ink);
+  box-shadow: 6px 6px 0 var(--accent);
+  overflow: hidden;
+  position: relative;
+}
+
+/* ─── Dotted Line Connecting Steps ──────────────────────────── */
+.steps-connector {
+  position: absolute;
+  top: 28px;
+  left: 10%;
+  right: 10%;
+  border-top: 2px dashed rgba(255, 216, 77, 0.4);
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .steps-connector {
+    display: none;
+  }
+}
+
+/* ─── Layout Helpers ────────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .container {
+    padding: 0 1.25rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .container {
+    padding: 0 0.75rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .container {
+    padding: 0 0.55rem;
+  }
+}
+
+.section-padding {
+  padding: 5rem 0;
+}
+
+@media (max-width: 992px) {
+  .section-padding {
+    padding: 4rem 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-padding {
+    padding: 3.25rem 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-padding {
+    padding: 2.75rem 0;
+  }
+}
+
+/* Section Colors alternating for rhythm */
+.section-cream {
+  background-color: var(--bg);
+}
+
+.section-surface {
+  background-color: var(--surface);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+/* Dark Teal Section */
+.section-teal {
+  background-color: var(--primary);
+  color: var(--bg);
+  border-top: 2px solid var(--ink);
+  border-bottom: 2px solid var(--ink);
+}
+.section-teal h1, 
+.section-teal h2, 
+.section-teal h3, 
+.section-teal h4 {
+  color: var(--bg);
+}
+.section-teal p {
+  color: #D3E4E4;
+}
+
+/* ─── Marquee Animation ─────────────────────────────────────── */
+.marquee-wrapper {
+  overflow: hidden;
+  white-space: nowrap;
+  user-select: none;
+  display: flex;
+}
+
+.marquee-content {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  animation: marquee-scroll 32s linear infinite;
+}
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0%); }
+  to { transform: translateX(-50%); }
+}
+
+.marquee-wrapper:hover .marquee-content {
+  animation-play-state: paused;
+}
+
+/* ─── Universal Cross-Device Utilities (Android, iOS, iPad/Tablet, Mac) ───── */
+
+/* Safe area bottom padding for drawers and fixed sheets on iOS/Android gesture nav */
+.safe-padding-bottom {
+  padding-bottom: max(1.25rem, calc(var(--safe-bottom) + 0.75rem)) !important;
+}
+
+/* Prevent text overflow or clipping on small mobile viewports */
+.truncate-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Fluid responsive grids */
+.grid-fluid-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  gap: 1.25rem;
+}
+
+/* Mobile Touch Target standard (min 44px on mobile) */
+@media (max-width: 768px) {
+  .btn {
+    min-height: 44px;
+    padding: 0.65rem 1.15rem;
+  }
+  
+  /* Touch devices smooth scrolling */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Tablet Optimizations (iPad Mini 768px, iPad Air 820px, iPad Pro 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .tablet-2-col {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* Small Phone Optimizations (iPhone SE, Galaxy Fold 320px - 380px) */
+@media (max-width: 380px) {
+  .small-screen-wrap {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .small-screen-btn {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+}
+
